@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 
 
 final class UserController extends AbstractController
@@ -97,7 +99,7 @@ final class UserController extends AbstractController
         $reset = new PasswordResetToken();
         $reset->setUser($data['email']);
         $reset->setToken($token);
-        $reset->setExpiredAt(new \DateTimeImmutable('+1 hour'));
+        $reset->setExpiredAt(new \DateTimeImmutable('+15 minutes'));
         $reset->setUsed(false);
 
         $email = (new Email())

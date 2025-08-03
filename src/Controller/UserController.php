@@ -15,6 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
+use Gesdinet\JWTRefreshTokenBundle\Model\RefreshTokenManagerInterface;
 
 
 final class UserController extends AbstractController
@@ -63,9 +64,6 @@ final class UserController extends AbstractController
         $hashed = $passwordHasher->hashPassword($user, $data['password']);
         $user->setPassword($hashed);
 
-        dump($hashed);
-
-
         return new JsonResponse(['message' => 'User registered successfully']);
 
         }
@@ -106,7 +104,6 @@ final class UserController extends AbstractController
         ->from('p73583347@gmail.com')
         ->to($data['email'])
         ->subject('Passwort Reset')
-        ->text('I Will survive')
         ->html("
             <p>Your Password Reset Link is below!</p>
             <p>If you didn’t request a password reset, just ignoreabout:blank#blockedbeb this message.</p>
@@ -166,13 +163,6 @@ public function reset(
     $em->flush();
 
     return new JsonResponse(['message' => 'Password has been successfully reset.']);
-}
-#[Route('/api/user_logout', methods: ['POST'])]
-public function logout(
-    Request $request,
-    EntityManagerInterface $em,
-): JsonResponse {
-    
 }
 
 }

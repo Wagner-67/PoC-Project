@@ -167,5 +167,12 @@ public function reset(
 
     return new JsonResponse(['message' => 'Password has been successfully reset.']);
 }
+#[Route('/api/user_logout', methods: ['POST'])]
+public function logout(
+    Request $request,
+    EntityManagerInterface $em,
+): JsonResponse {
+    
+}
 
 }

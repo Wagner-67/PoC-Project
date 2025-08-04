@@ -4,3 +4,8 @@ framework:
       policy: 'sliding_window'
       limit: 5
       interval: '1 minute'
+
+    anonymous_api:
+      policy: 'sliding_window'
+      limit: 5
+      interval: '1 minute'
